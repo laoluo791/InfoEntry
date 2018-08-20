@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+	<Properties>
+		<!-- 配置日志文件输出目录,此处为项目根目录下的logs文件夹 -->
+		<Property name="LOG_HOME">logs</Property>
+		<property name="FILE_NAME">log</property>
+	</Properties>
+
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+            <ThresholdFilter level="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
+			<PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%l] %-5level - %msg%n" />
+		</Console>
+
+
+		<!--设置级别为ERROR日志输出到error.log中 -->
+		<RollingFile name="ERROR" filename="${LOG_HOME}/error.log"
+			filepattern="${LOG_HOME}/%d{YYYYMMdd}-%i-error.log.zip">
+			<!--设置只输出级别为ERROR的日志 -->
+			<ThresholdFilter level="ERROR" />
+			<PatternLayout
+				pattern="[%-5p]:%d{YYYY-MM-dd HH:mm:ss} [%l] - %msg%n" />
+			<Policies>
+				<!--设置每天打包日志一次 -->
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!--设置日志文件满1MB后打包 -->
+				<SizeBasedTriggeringPolicy size="1 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingFile>
+	</appenders>
+
+
+	<loggers>
+		<root level="error">
+			<appender-ref ref="Console" />
+            <appender-Ref ref="ERROR"/>
+		</root>
+	</loggers>
+</configuration>
