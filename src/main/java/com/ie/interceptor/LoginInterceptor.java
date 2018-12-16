@@ -18,7 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        System.out.println("进入拦截器...");
+        //System.out.println("进入拦截器...");
         Cookie[] cookies = request.getCookies();
         Admin admin = new Admin();
         boolean flag = false;
